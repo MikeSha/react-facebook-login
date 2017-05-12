@@ -59,32 +59,6 @@ ReactDOM.render(
     fields="name,email,picture"
     callback={responseFacebook}
     cssClass="my-facebook-button-class"
-    icon="fa-facebook"
-  />,
-  document.getElementById('demo')
-);
-```
-
-Custom element example:
-```js
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import FacebookLogin from 'react-facebook-login';
-import TiSocialFacebookCircular from 'react-icons/lib/ti/social-facebook-circular';
-
-const responseFacebook = (response) => {
-  console.log(response);
-}
-
-ReactDOM.render(
-  <FacebookLogin
-    appId="1088597931155576"
-    autoLoad={true}
-    fields="name,email,picture"
-    callback={responseFacebook}
-    cssClass="my-facebook-button-class"
-    icon={<TiSocialFacebookCircular />}
   />,
   document.getElementById('demo')
 );
