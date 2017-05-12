@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../styles/facebook.scss';
+// import styles from '../styles/facebook.scss';
 import objectToParams from './objectToParams';
 
 const getIsMobile = () => {
@@ -38,7 +38,6 @@ class FacebookLogin extends React.Component {
     reAuthenticate: PropTypes.bool,
     scope: PropTypes.string,
     redirectUri: PropTypes.string,
-    textButton: PropTypes.string,
     typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     disableMobileRedirect: PropTypes.bool,
@@ -47,12 +46,12 @@ class FacebookLogin extends React.Component {
     fields: PropTypes.string,
     cssClass: PropTypes.string,
     version: PropTypes.string,
-    icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
     tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    children: PropTypes.node,
   };
 
   static defaultProps = {
@@ -195,14 +194,6 @@ class FacebookLogin extends React.Component {
     }
   };
 
-  style() {
-    const defaultCSS = this.constructor.defaultProps.cssClass;
-    if (this.props.cssClass === defaultCSS) {
-      return <style dangerouslySetInnerHTML={{ __html: styles }}></style>;
-    }
-    return false;
-  }
-
   // [AdGo] 20.11.2016 - coult not get container class to work
   containerStyle() {
     const style = { transition: 'opacity 0.5s' };
@@ -213,34 +204,23 @@ class FacebookLogin extends React.Component {
   }
 
   render() {
-    const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
-    const isIconString = typeof icon === 'string';
+    const { cssClass, size, typeButton, buttonStyle } = this.props;
     const optionalProps = {};
+
     if (this.props.isDisabled && _shouldAddDisabledProp(this.props.tag)) {
       optionalProps.disabled = true;
     }
+
     return (
       <span style={ this.containerStyle() }>
-        {isIconString && (
-          <link
-            rel="stylesheet"
-            href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-          />
-        )}
         <this.props.tag
           type={typeButton}
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
           onClick={this.click}
-          {...optionalProps}
-        >
-          {icon && isIconString && (
-            <i className={`fa ${icon}`}></i>
-          )}
-          {icon && !isIconString && icon}
-          {textButton}
+          {...optionalProps}>
+          {this.props.children}
         </this.props.tag>
-        {this.style()}
       </span>
     );
   }
